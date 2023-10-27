@@ -1,5 +1,5 @@
 import { Engine, Color, DisplayMode } from "excalibur";
-import { Destination } from "./Actors/Destination";
+import { Destination, DestinationKind } from "./Actors/Destination";
 import { repeatExpressionCall } from "./utils/repeatExpressionCall";
 import { Ship } from "./Actors/Ship";
 
@@ -13,9 +13,20 @@ export class Game extends Engine {
   }
   initialize() {
     repeatExpressionCall(10, () => {
-      this.add(new Destination());
+      this.add(
+        new Destination({
+          kind: DestinationKind.Trader,
+        })
+      );
     });
-    repeatExpressionCall(100, () => {
+    repeatExpressionCall(36, () => {
+      this.add(
+        new Destination({
+          kind: DestinationKind.Home,
+        })
+      );
+    });
+    repeatExpressionCall(42, () => {
       this.add(new Ship());
     });
     this.start();
