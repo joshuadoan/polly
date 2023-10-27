@@ -1,5 +1,5 @@
 import { Actor, Engine, randomInRange, Color } from "excalibur";
-import { getRandomScreenPosition } from "./utils/getRandomScreenPosition";
+import { getRandomScreenPosition } from "../utils/getRandomScreenPosition";
 
 export class Destination extends Actor {
   public health: number = 100;
@@ -10,12 +10,13 @@ export class Destination extends Actor {
       name: `Destination - ${randomInRange(1, 100)}`,
       width: 10,
       height: 10,
-      color: Color.Red,
+      color: Color.ExcaliburBlue,
     });
   }
 
   onInitialize(_engine: Engine): void {
     this.pos = getRandomScreenPosition(_engine);
+    this.graphics.opacity = 0.5;
   }
 
   transact() {

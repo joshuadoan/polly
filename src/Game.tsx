@@ -1,23 +1,23 @@
-import { Engine, Loader, Color, DisplayMode } from "excalibur";
-import { Destination } from "./Destination";
+import { Engine, Color, DisplayMode } from "excalibur";
+import { Destination } from "./Actors/Destination";
+import { repeatExpressionCall } from "./utils/repeatExpressionCall";
+import { Ship } from "./Actors/Ship";
 
 export class Game extends Engine {
   constructor() {
     super({
-      displayMode: DisplayMode.FitContainerAndFill,
+      displayMode: DisplayMode.FitScreen,
       backgroundColor: Color.Black,
       canvasElementId: "canvas",
-      width: 500,
-      height: 500,
     });
   }
   initialize() {
-    Array.from({ length: 100 }, () => {
-      const destination = new Destination();
-      this.add(destination);
+    repeatExpressionCall(10, () => {
+      this.add(new Destination());
     });
-
-    const loader = new Loader([]);
-    this.start(loader);
+    repeatExpressionCall(100, () => {
+      this.add(new Ship());
+    });
+    this.start();
   }
 }
