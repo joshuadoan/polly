@@ -4,9 +4,9 @@ import { repeat } from "./utils/repeatExpressionCall";
 import { Ship } from "./Actors/Ship";
 import { getRandomScreenPosition } from "./utils/getRandomScreenPosition";
 
-const NUMBER_OF_SHOPS = 10;
+const NUMBER_OF_SHOPS = 32;
 const NUMBER_OF_HOMES = 10;
-const NUMBER_OF_SHIPS = 42;
+const NUMBER_OF_SHIPS = 1;
 
 export class Game extends Engine {
   public selected: Ship | null = null;

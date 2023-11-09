@@ -1,8 +1,24 @@
+import { Destination } from "../Actors/Destination";
+import { ShipAction, ShipState } from "../Actors/Ship";
+
+interface Traveling {
+  kind: ShipState.TravelingToWork;
+  destination: Destination;
+}
+
 export type StateDefinition<State extends string, Event extends string> = {
   [key in State]: {
     [key in Event]?: State;
   };
 };
+
+// const machine = createMachine<string, string>({
+//   [ShipState.Idle]: {
+//     [ShipAction.GoToWork]: ShipState.Traveling,
+//   },
+// });
+
+// definition.dispatch(ShipState.Idle, ShipAction.GoToWork);
 
 export function createMachine<State extends string, Event extends string>(
   definition: StateDefinition<State, Event>

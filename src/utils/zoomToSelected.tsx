@@ -1,5 +1,5 @@
 import { Actor, Camera } from "excalibur";
-const MAX_ZOOM = 7;
+const MAX_ZOOM = 5;
 export function zoomToActor(meeple: Actor, camera: Camera) {
   camera.clearAllStrategies();
   camera.strategy.elasticToActor(meeple, 0.3, 0.3);
