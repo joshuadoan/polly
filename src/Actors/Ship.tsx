@@ -1,13 +1,4 @@
-import {
-  Actor,
-  Color,
-  Engine,
-  FontUnit,
-  Label,
-  vec,
-  Font,
-  Timer,
-} from "excalibur";
+import { Actor, Color, Timer } from "excalibur";
 
 import {
   uniqueNamesGenerator,
@@ -31,6 +22,16 @@ const MAX_SPEED = 50;
 
 const TRANSACTION_TIME = 2000;
 
+const dictionaries = [
+  adjectives,
+  animals,
+  colors,
+  countries,
+  languages,
+  names,
+  starWars,
+];
+
 export enum ShipState {
   Idle = "idle",
   TravelingToWork = "traveling to work",
@@ -44,25 +45,14 @@ export enum ShipAction {
   GoHome = "go home",
 }
 
-const dictionaries = [
-  adjectives,
-  animals,
-  colors,
-  countries,
-  languages,
-  names,
-  starWars,
-];
-
-export const isShip = (a: Actor) => a instanceof Ship;
 export class Ship extends Actor {
   public destination: Destination | null = null;
+  public game: Game | null = null;
+  public home?: Destination;
   public labor: number = 0;
   public laborThreshold: number = 10;
-  public state: ShipState = ShipState.Idle;
   public speed: number = getRandomInt(MIN_SPEED, MAX_SPEED);
-  public home?: Destination;
-  public game: Game | null = null;
+  public state: ShipState = ShipState.Idle;
   constructor() {
     super({
       width: 2,
@@ -83,7 +73,7 @@ export class Ship extends Actor {
     this.game = game;
 
     const timer = new Timer({
-      fcn: () => this.timer(this),
+      fcn: () => this.timer(),
       repeats: true,
       interval: 1000,
     });
@@ -93,8 +83,7 @@ export class Ship extends Actor {
     timer.start();
   }
 
-  timer(ship: Ship): void {
-    console.log(ship.labor);
+  timer(): void {
     switch (this.state) {
       case ShipState.Home:
         this.labor--;
@@ -130,9 +119,6 @@ export class Ship extends Actor {
   }
 
   update(): void {
-    // if (!this.actions.getQueue().isComplete()) {
-    //   return;
-    // }
     switch (this.state) {
       case ShipState.Idle: {
         this.dispatch(ShipAction.GoToWork);
@@ -144,7 +130,7 @@ export class Ship extends Actor {
         }
         break;
       }
-      case ShipState.Working: {
+      case ShipState.Home: {
         if (this.labor < 1) {
           this.dispatch(ShipAction.GoToWork);
         }
